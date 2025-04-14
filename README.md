@@ -73,13 +73,6 @@ A modern, responsive portfolio website built with Next.js 13, TypeScript, and Ta
   <img src="https://img.shields.io/badge/HTML5_Audio-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5 Audio">
 </div>
 
-## 📸 Screenshots
-
-<div align="center">
-  <img src="https://via.placeholder.com/800x450/222222/FFFFFF?text=Portfolio+Screenshot" alt="Portfolio Screenshot" width="80%">
-  
-  <p><i>More screenshots coming soon!</i></p>
-</div>
 
 ## 🛠️ Installation
 
@@ -171,7 +164,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <img src="https://avatars.githubusercontent.com/sumanbisunkhe" alt="Suman Bisunkhe" width="150" style="border-radius: 50%;">
   
   <h3>Suman Bisunkhe</h3>
-  <p>Full Stack Developer | UI/UX Enthusiast | Open Source Contributor</p>
+  <p>Java Developer |Full Stack Enthusiast</p>
   
   <p>
     <a href="https://github.com/sumanbisunkhe"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
@@ -206,5 +199,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   <p>Made with ❤️ by Suman Bisunkhe</p>
-  <p>© 2024 All Rights Reserved</p>
+  <p>© 2025 All Rights Reserved</p>
 </div> 
