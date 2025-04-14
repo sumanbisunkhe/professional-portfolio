@@ -164,7 +164,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   <img src="https://avatars.githubusercontent.com/sumanbisunkhe" alt="Suman Bisunkhe" width="150" style="border-radius: 50%;">
   
   <h3>Suman Bisunkhe</h3>
-  <p>Java Developer |Full Stack Enthusiast</p>
+  <p>Java Developer | Full Stack Enthusiast</p>
   
   <p>
     <a href="https://github.com/sumanbisunkhe"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
