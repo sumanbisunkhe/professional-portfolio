@@ -38,6 +38,13 @@ import {
   GraduationCap,
   Database,
   Globe,
+  SkipBack,
+  Pause,
+  Play,
+  SkipForward,
+  Volume2,
+  Sun,
+  Moon,
 } from "lucide-react"
 import { RightSidebar } from "@/components/right-sidebar"
 import { LeftSidebar } from "@/components/left-sidebar"
@@ -53,7 +60,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [loadingProgress, setLoadingProgress] = useState(0)
-  const { theme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const isMobile = useMobile()
   const [formData, setFormData] = useState({
     name: "",
@@ -234,7 +241,7 @@ export default function Home() {
   }
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-background">
+    <div ref={containerRef} className="relative min-h-screen bg-background overflow-x-hidden">
       {isLoading && <LoadingAnimation fullScreen progress={loadingProgress} />}
       
       {!isLoading && (
@@ -248,15 +255,29 @@ export default function Home() {
       />
 
       {/* Left Sidebar */}
-      <LeftSidebar />
+      <div className="hidden lg:block">
+        <LeftSidebar />
+      </div>
 
       {/* Right Sidebar */}
-      <RightSidebar />
+      <div className="hidden lg:block">
+        <RightSidebar />
+      </div>
 
       <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/40">
-        <div className="container flex h-20 items-center justify-center">
-          {/* Desktop Navigation */}
-          <nav className="flex gap-0.5 sm:gap-1">
+        <div className="container flex h-16 sm:h-20 items-center justify-between px-2 sm:px-4 md:px-8">
+          {/* Theme toggler and logo only on mobile/tablet */}
+          <div className="flex items-center gap-2 flex-shrink-0 lg:hidden">
+            <ThemeToggler />
+          </div>
+          <div className="flex-1 flex justify-center items-center lg:hidden">
+            {/* Show full name on mobile and tablet */}
+            <span className="block font-serif font-extrabold tracking-widest text-primary select-none text-base xs:text-lg sm:text-xl md:text-2xl" style={{ letterSpacing: '0.15em' }}>
+              SUMAN BISUNKHE
+            </span>
+          </div>
+          {/* Desktop Navigation (hidden on mobile/tablet) */}
+          <nav className="hidden lg:flex gap-0.5 sm:gap-1 flex-1 justify-center">
             {sections.map((section, index) => (
               <motion.button
                 key={section}
@@ -279,6 +300,12 @@ export default function Home() {
               </motion.button>
             ))}
           </nav>
+          {/* Mobile/Tablet Hamburger (shown for md and below lg) */}
+          <div className="flex md:flex lg:hidden items-center gap-2 flex-shrink-0">
+            <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -295,7 +322,10 @@ export default function Home() {
             <div className="container h-full flex flex-col">
               <div className="flex items-center justify-between py-6">
                 <div className="flex items-center gap-2">
-                  <StylishLogo size="small" compact={true} />
+                  <ThemeToggler />
+                  <span className="block font-serif font-extrabold tracking-widest text-primary select-none text-base xs:text-lg sm:text-xl md:text-2xl" style={{ letterSpacing: '0.15em' }}>
+                    SUMAN BISUNKHE
+                  </span>
                 </div>
                 <Button variant="ghost" size="icon" onClick={closeMobileMenu}>
                   <X className="h-6 w-6" />
@@ -306,7 +336,7 @@ export default function Home() {
                   <motion.button
                     key={section}
                     onClick={() => scrollToSection(section)}
-                    className={`text-2xl font-medium uppercase tracking-wider ${activeSection === section ? "text-primary" : "text-muted-foreground"
+                    className={`text-xl sm:text-2xl font-medium uppercase tracking-wider ${activeSection === section ? "text-primary" : "text-muted-foreground"
                       }`}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -316,7 +346,11 @@ export default function Home() {
                   </motion.button>
                 ))}
               </nav>
-              <div className="mt-auto pb-8 flex gap-4">
+              {/* Music Player for mobile/tablet */}
+              <div className="flex flex-row items-center justify-center gap-6 py-4 border-t border-border/20">
+                <MobileMusicPlayer />
+              </div>
+              <div className="mt-auto pb-8 flex gap-4 justify-center">
                 <Button asChild variant="outline" size="icon" className="rounded-full">
                   <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
                     <Github className="h-4 w-4" />
@@ -327,17 +361,32 @@ export default function Home() {
                     <Linkedin className="h-4 w-4" />
                   </Link>
                 </Button>
+                <Button asChild variant="outline" size="icon" className="rounded-full">
+                  <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <Facebook className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="icon" className="rounded-full">
+                  <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="icon" className="rounded-full">
+                  <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                    <Twitter className="h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <main className="pt-20 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 ml-20 md:ml-24 mr-20 md:mr-24 overflow-x-hidden">
+      <main className="pt-20 sm:pt-24 px-2 sm:px-4 md:px-8 lg:px-10 xl:px-12 md:ml-24 md:mr-24 ml-0 mr-0 overflow-x-hidden">
         {/* Hero Section */}
         <section
           id="home"
-          className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
+          className="relative min-h-[80vh] flex flex-col items-center justify-center px-2 sm:px-6 md:px-8 lg:px-12 xl:px-16"
         >
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/20" />
@@ -353,7 +402,7 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 <motion.h1
-                  className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                  className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -365,7 +414,7 @@ export default function Home() {
                 </motion.h1>
 
                 <motion.h2
-                  className={`text-xl sm:text-2xl md:text-3xl font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+                  className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
@@ -406,12 +455,12 @@ export default function Home() {
 
               {/* Right Content - Profile Image */}
               <motion.div
-                className="lg:col-span-5 flex justify-center lg:justify-end"
+                className="lg:col-span-5 flex justify-center lg:justify-end mt-8 lg:mt-0"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <div className="relative mx-auto aspect-square w-32 sm:w-40 md:w-48 lg:w-64 xl:w-80">
+                <div className="relative mx-auto aspect-square w-28 sm:w-40 md:w-48 lg:w-64 xl:w-80">
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 blur-xl" />
                   <div className="relative rounded-full overflow-hidden">
                     <img
@@ -1420,5 +1469,123 @@ function TimelineItem({
         </Card>
       </div>
     </motion.div>
+  )
+}
+
+function MobileMusicPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
+  const [currentTrack, setCurrentTrack] = useState(0)
+  const [volume, setVolume] = useState(0.5)
+  const tracks = [
+    "/music/1.mp3",
+    "/music/2.mp3",
+    "/music/3.mp3",
+    "/music/4.mp3",
+    "/music/5.mp3",
+    "/music/6.mp3",
+    "/music/7.mp3",
+    "/music/8.mp3"
+  ]
+
+  useEffect(() => {
+    const audioElement = new Audio(tracks[currentTrack])
+    audioElement.volume = volume
+    audioElement.onended = () => nextTrack()
+    setAudio(audioElement)
+    return () => {
+      audioElement.pause()
+      audioElement.currentTime = 0
+      audioElement.remove()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTrack])
+
+  useEffect(() => {
+    if (audio) audio.volume = volume
+  }, [volume, audio])
+
+  const toggleMusic = async () => {
+    if (audio) {
+      if (isPlaying) {
+        await audio.pause()
+      } else {
+        await audio.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+  const nextTrack = () => {
+    if (audio) {
+      audio.pause()
+      setCurrentTrack((prev) => (prev + 1) % tracks.length)
+      setIsPlaying(true)
+    }
+  }
+  const previousTrack = () => {
+    if (audio) {
+      audio.pause()
+      setCurrentTrack((prev) => (prev - 1 + tracks.length) % tracks.length)
+      setIsPlaying(true)
+    }
+  }
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(parseFloat(e.target.value))
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <Button variant="ghost" size="icon" onClick={previousTrack} className="h-8 w-8 p-0">
+        <SkipBack className="h-4 w-4" />
+      </Button>
+      <Button variant="ghost" size="icon" onClick={toggleMusic} className="h-8 w-8 p-0">
+        {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+      </Button>
+      <Button variant="ghost" size="icon" onClick={nextTrack} className="h-8 w-8 p-0">
+        <SkipForward className="h-4 w-4" />
+      </Button>
+      <Volume2 className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={volume}
+        onChange={handleVolumeChange}
+        className="w-16 h-1 accent-primary bg-primary/20 rounded-full appearance-none cursor-pointer hover:bg-primary/30 transition-colors"
+      />
+    </div>
+  )
+}
+
+function ThemeToggler() {
+  const { theme, setTheme } = useTheme()
+  const isDark = theme === "dark"
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark")
+  return (
+    <motion.button
+      onClick={toggleTheme}
+      className="cursor-pointer flex items-center justify-center rounded-full bg-background/60 border border-border/30 shadow-md w-10 h-10 sm:w-12 sm:h-12"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Toggle theme"
+    >
+      {isDark ? (
+        <motion.div
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        >
+          <Sun className="h-6 w-6 text-yellow-400" />
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          <Moon className="h-6 w-6 text-blue-400" />
+        </motion.div>
+      )}
+    </motion.button>
   )
 }
