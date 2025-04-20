@@ -256,12 +256,12 @@ export default function Home() {
 
       {/* Left Sidebar */}
       <div className="hidden lg:block">
-        <LeftSidebar />
+      <LeftSidebar />
       </div>
 
       {/* Right Sidebar */}
       <div className="hidden lg:block">
-        <RightSidebar />
+      <RightSidebar />
       </div>
 
       <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/40">
@@ -466,7 +466,7 @@ export default function Home() {
                     <img
                       alt="Suman Bisunkhe - Java Programmer"
                       className="mx-auto aspect-square overflow-hidden rounded-full object-cover object-center border-4 border-background shadow-xl w-full h-full"
-                      src="/docs/profile.jpeg"
+                      src="/docs/pp.png"
                     />
                   </div>
                 </div>
