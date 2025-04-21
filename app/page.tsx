@@ -466,7 +466,7 @@ export default function Home() {
                     <img
                       alt="Suman Bisunkhe - Java Programmer"
                       className="mx-auto aspect-square overflow-hidden rounded-full object-cover object-center border-4 border-background shadow-xl w-full h-full"
-                      src="/docs/pp.png"
+                      src="/docs/pp.webp"
                     />
                   </div>
                 </div>
